@@ -1,5 +1,6 @@
 name: CamelCaseIssue
 on:
+  push:
   workflow_dispatch:
     inputs:
       debug_enabled:
@@ -16,7 +17,7 @@ jobs:
     steps:
     - name: Install and cache PowerShell modules
       id: psmodulecache
-      uses: ./
+      uses: Callidus2000/psmodulecache@main
       with:
         modules-to-cache: Microsoft.PowerShell.SeCrEtMaNagement,ChangelogManagement
         updatable: "false"
