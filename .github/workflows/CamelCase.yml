@@ -1,0 +1,36 @@
+name: CamelCaseIssue
+on:
+  workflow_dispatch:
+    inputs:
+      debug_enabled:
+        type: boolean
+        description: 'Run the build with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'
+        required: false
+        default: false
+jobs:
+  CamelCaseIssue:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+    - name: Install and cache PowerShell modules
+      id: psmodulecache
+      uses: ./
+      with:
+        modules-to-cache: Microsoft.PowerShell.SeCrEtMaNagement,ChangelogManagement
+        updatable: "false"
+        shell: powershell,pwsh
+    - name: Make sure modules are installed
+      shell: pwsh
+      run: |
+        #'RestartableSession','PSFramework','string','PSModuleDevelopment','Microsoft.Powershell.SecretManagement','ChangelogManagement'|
+        'Microsoft.Powershell.SecretManagement','ChangelogManagement'|
+        foreach {
+            Write-Host "$_ '$(Get-Module $_ -ListAvailabLe|Select-Object Name,Version,@{Name='PreRelease';e={$_.PrivateData.PSData.Prerelease}},RepositorySourceLocation)'"
+            Import-Module $_
+        }
+    - name: Setup tmate session
+      # if: ${{ failure() || (github.event_name == 'workflow_dispatch' && inputs.debug_enabled ) }}
+      if: ${{ failure() || inputs.debug_enabled }}
+      uses: mxschmitt/action-tmate@v3
