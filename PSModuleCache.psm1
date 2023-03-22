@@ -592,6 +592,7 @@ function Save-ModuleCache {
          $RepoItemInfo = Find-ModuleCache @Parameters
          if ($null -ne $RepoItemInfo) {
             $parameters.Repository = $RepoItemInfo.Repository
+            $parameters.Name = $RepoItemInfo.Name
             if (Test-Path env:CI)
             { Write-Output ("`tModule '{0}' version '{1}' found in '{2}'." -F $RepoItemInfo.Name, $RepoItemInfo.Version, $RepoItemInfo.Repository) }
             Save-Module @Parameters -Path $ModulePath -Force -ErrorAction Stop
