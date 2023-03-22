@@ -237,6 +237,7 @@ function Split-ModuleCacheInformation {
 
       if ($null -ne $RepoItemInfo) {
          $Version = $RepoItemInfo.Version
+         $Name    = $RepoItemInfo.Name # Get the real module Name from the manifest; bypasses CaMeLcAsE Problems ;-)
       } else {
          $Version = $null
       }
