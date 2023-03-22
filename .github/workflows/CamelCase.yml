@@ -19,7 +19,7 @@ jobs:
       id: psmodulecache
       uses: Callidus2000/psmodulecache@main
       with:
-        modules-to-cache: Microsoft.PowerShell.SeCrEtMaNagement,ChangelogManagement
+        modules-to-cache: Microsoft.PowerShell.SeCrEtMaNaGement,ChangelogManagement
         updatable: "false"
         shell: powershell,pwsh
     - name: Make sure modules are installed
